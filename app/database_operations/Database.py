@@ -1,12 +1,17 @@
 import mysql.connector
 
 
-class DatabaseOp:
+class Database:
     def __init__(self, database_name):
         self.database_name = database_name
         self.conn = False
 
     def connect(self) -> str:
+        """
+        Attempt to connect to MySQL database with given name.
+        If database is not found, create one with the given
+        name.
+        """
         try:
             self.conn = mysql.connector.connect(
                 user="root",

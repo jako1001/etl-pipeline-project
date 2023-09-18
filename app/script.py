@@ -1,12 +1,6 @@
 from transform_data.Transform import Transform
-from database_operations.DatabaseOp import DatabaseOp
+from database_operations.Database import Database
 
-db = DatabaseOp("userinfo")
-print(db.connect())
+db = Database("userinfo")
 
 csv = Transform("./csv/MOCK_DATA.csv", "csv")
-converted = csv.csv_to_dataframe()
-
-print(converted)
-
-db.connection_data()

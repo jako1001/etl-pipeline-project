@@ -10,6 +10,7 @@ class Transform:
     def csv_to_dataframe(
         self,
     ) -> DataFrame | str:
+        """Converts csv file at a given directory into a pandas DataFrame"""
         if self.type == "csv":
             try:
                 df = pd.read_csv(self.file_path)
