@@ -24,3 +24,6 @@ class Transform:
                 return f"Something went wrong while reading the csv with file path ({self.file_path}). Is the file path correct?"
 
         return "File is not a csv."
+
+    # def dataframe_to_sql_format(self, dataframe, db_conn, column):
+    #     return dataframe.to_sql("users", con=db_conn, if_exists="append", index=False)
