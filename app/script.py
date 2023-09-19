@@ -1,9 +1,9 @@
 from transform_data.Transform import Transform
 from database_handler.DatabaseHandler import DatabaseHandler
 
-db = DatabaseHandler("root", "root", "mysql", "3306", "userinfo")
+# db = DatabaseHandler("root", "root", "mysql", "3306", "userinfo")
 
-txt = Transform("./unstructured/unstructured.txt").unstructured_to_dataframe()
+txt = Transform("./unstructured/unstructured.txt").read_email_and_number_unstructured()
 
 # csv = Transform("./csv/MOCK_DATA.csv")
 

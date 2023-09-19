@@ -9,7 +9,7 @@ class Transform:
 
     def csv_to_dataframe(
         self,
-    ) -> DataFrame | str:
+    ) -> DataFrame:
         """Converts csv file at a given directory into a pandas DataFrame"""
         try:
             df = pd.read_csv(self.file_path)
@@ -20,9 +20,9 @@ class Transform:
             return df
 
         except FileNotFoundError:
-            return f"Something went wrong while reading the csv with file path ({self.file_path}). Is the file path correct?"
+            raise FileNotFoundError(f"Something went wrong while reading the csv with file path ({self.file_path}). Is the file path correct?")
 
-    def unstructured_to_dataframe(self) -> DataFrame | str:
+    def read_email_and_number_unstructured(self) -> DataFrame:
         try:
             with open(self.file_path, "r") as file:
                 text = file.read()
@@ -33,8 +33,10 @@ class Transform:
 
                 phone_numbers = re.findall(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", text)
 
-                print("EMAILS: ", emails)
-                print("PHONE NUMBERS", phone_numbers)
+            data = list(zip(emails, phone_numbers))
+            df = pd.DataFrame(data, columns=["Emails", "Phone Numbers"])
+
+            return df
 
         except FileNotFoundError:
-            return f"Something went wrong while reading the file with file path ({self.file_path}). Is the file path correct?"
+            raise FileNotFoundError(f"Something went wrong while reading the file with file path ({self.file_path}). Is the file path correct?")
