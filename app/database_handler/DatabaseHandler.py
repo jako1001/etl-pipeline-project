@@ -9,11 +9,11 @@ class DatabaseHandler:
 
     def create_table(self, table_name, df):
         """Create a named table with named columns from
-           the headers of a DataFrame in the connected MySQL database
+        the headers of a DataFrame in the connected MySQL database
 
-           Keyword Arguements: \n
-           table_name -- Name that you want the table to be \n
-           df -- Pandas DataFrame with headers
+        Keyword Arguements: \n
+        table_name -- Name that you want the table to be \n
+        df -- Pandas DataFrame with headers
         """
         self.column_names = [header for header in list(df)]
         columns_with_types = ", ".join(
@@ -25,12 +25,12 @@ class DatabaseHandler:
 
     def insert(self, df, table):
         """Insert data from a DataFrame into a table
-           in the connected MySQL database
+        in the connected MySQL database
 
-           Keyword arguements: \n
-           df -- Pandas DataFrame \n
-           table -- Name of the table in the database
-           you want to add data to
+        Keyword arguements: \n
+        df -- Pandas DataFrame \n
+        table -- Name of the table in the database
+        you want to add data to
         """
         for _, row in df.iterrows():
             columns = ", ".join(self.column_names)
@@ -41,14 +41,14 @@ class DatabaseHandler:
 
         self.conn.commit()
 
-    def view_table(self, table):
-        """View the column names and data from a
-           specific table in the connected MySQL
-           database
+    def view_table(self, table) -> None:
+        """Print the column names and data from a
+        specific table in the connected MySQL
+        database
 
-           Keyword Arguments: \n
-           table -- Name of the table in the database
-           you want to view
+        Keyword Arguments: \n
+        table -- Name of the table in the database
+        you want to view
         """
         select = f"SELECT * FROM {table}"
         self.cursor.execute(select)
