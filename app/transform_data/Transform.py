@@ -6,8 +6,6 @@ class Transform():
     def __init__(self, file_path) -> None:
         self.file_path = file_path
 
-    def ppp(self):
-        print("COLUMN NAMES IN TRANSFORM: ", self.column_names)
 
     def csv_to_dataframe(
         self,
@@ -22,4 +20,4 @@ class Transform():
             return df
 
         except:
-            return f"Something went wrong while reading the csv with file path ({self.file_path}). Is the file path correct?"
+            return f"Something went wrong while reading the csv with file path ({self.file_path}). Is the file path correct?"ç
