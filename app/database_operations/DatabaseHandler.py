@@ -32,5 +32,7 @@ class DatabaseHandler:
         select = f"SELECT * FROM {table}"
         self.cursor.execute(select)
         rows = self.cursor.fetchall()
+        column_names = [column[0] for column in self.cursor.description]
 
+        print(", ".join(column_names))
         [print(row) for row in rows]
