@@ -1,28 +1,38 @@
-from .db_funcs import connect_to_database, format_table_data
+from .db_funcs import connect_to_database
 
 
 class DatabaseHandler:
     def __init__(self, user, password, host, port, database):
         self.conn = connect_to_database(user, password, host, port, database)
+        self.cursor = self.conn.cursor()
+        self.column_names = []
 
     def create_table(self, table_name, df):
-        cursor = self.conn.cursor()
-        column_names = [header for header in list(df)]
-        column_types = ["VARCHAR(255)"] * len(column_names)
+        self.column_names = [header for header in list(df)]
 
-        query = f"CREATE TABLE {table_name} (id INT AUTO_INCREMENT PRIMARY KEY,{format_table_data(column_names, column_types)})"
+        columns_with_types = ", ".join(
+            [f"{name} VARCHAR(255)" for name in self.column_names]
+        )
 
-        if table_name:
-            try:
-                cursor.execute(query)
-            except Exception as e:
-                print(e)
+        query = f"CREATE TABLE IF NOT EXISTS {table_name} (id INT AUTO_INCREMENT PRIMARY KEY, {columns_with_types})"
 
+        self.cursor.execute(query)
 
-    # def insert(self, df, table):
-    #     cursor = self.conn.cursor()
+    def insert(self, df, table):
+        for _, row in df.iterrows():
+            columns = ", ".join(self.column_names)
+            placeholders = ", ".join(["%s"] * len(self.column_names))
+            query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
 
-    #     df.to_sql(table, con=self.conn, if_exists="append", index=False)
+            self.cursor.execute(query, tuple(row))
 
-    #     print(df)
-    #     # query = f"INSERT INTO {table} "
+        self.conn.commit()
+
+    def view_table(self, table):
+        select = f"SELECT * FROM {table}"
+        self.cursor.execute(select)
+        rows = self.cursor.fetchall()
+        column_names = [column[0] for column in self.cursor.description]
+
+        print(", ".join(column_names))
+        [print(row) for row in rows]
