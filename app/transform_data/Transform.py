@@ -1,29 +1,46 @@
+import re
 import pandas as pd
 from pandas import DataFrame
 
 
 class Transform:
-    def __init__(self, file_path, type) -> None:
+    def __init__(self, file_path) -> None:
         self.file_path = file_path
-        self.type = type
 
     def csv_to_dataframe(
         self,
-    ) -> DataFrame | str:
+    ) -> DataFrame:
         """Converts csv file at a given directory into a pandas DataFrame"""
-        if self.type == "csv":
-            try:
-                df = pd.read_csv(self.file_path)
+        try:
+            df = pd.read_csv(self.file_path)
 
-                print(
-                    f"Successfully created DataFrame from the csv file located at: ({self.file_path})"
+            print(
+                f"Successfully created DataFrame from the csv file located at: ({self.file_path})"
+            )
+            return df
+
+        except FileNotFoundError:
+            raise FileNotFoundError(
+                f"Something went wrong while reading the csv with file path ({self.file_path}). Is the file path correct?"
+            )
+
+    def unstructured_email_and_number_to_dataframe(self) -> DataFrame:
+        try:
+            with open(self.file_path, "r") as file:
+                text = file.read()
+
+                emails = re.findall(
+                    r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b", text
                 )
-                return df
 
-            except:
-                return f"Something went wrong while reading the csv with file path ({self.file_path}). Is the file path correct?"
+                phone_numbers = re.findall(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", text)
 
-        return "File is not a csv."
+            data = list(zip(emails, phone_numbers))
+            df = pd.DataFrame(data, columns=["Email", "Phone_Number"])
 
-    # def dataframe_to_sql_format(self, dataframe, db_conn, column):
-    #     return dataframe.to_sql("users", con=db_conn, if_exists="append", index=False)
+            return df
+
+        except FileNotFoundError:
+            raise FileNotFoundError(
+                f"Something went wrong while reading the file with file path ({self.file_path}). Is the file path correct?"
+            )
