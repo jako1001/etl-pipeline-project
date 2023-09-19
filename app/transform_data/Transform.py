@@ -19,18 +19,22 @@ class Transform:
             )
             return df
 
-        except:
+        except FileNotFoundError:
             return f"Something went wrong while reading the csv with file path ({self.file_path}). Is the file path correct?"
 
     def unstructured_to_dataframe(self) -> DataFrame | str:
-        with open(self.file_path, "r") as file:
-            text = file.read()
+        try:
+            with open(self.file_path, "r") as file:
+                text = file.read()
 
-            emails = re.findall(
-                r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b", text
-            )
+                emails = re.findall(
+                    r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b", text
+                )
 
-            phone_numbers = re.findall(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", text)
+                phone_numbers = re.findall(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", text)
 
-            print("EMAILS: ", emails)
-            print("PHONE NUMBERS", phone_numbers)
+                print("EMAILS: ", emails)
+                print("PHONE NUMBERS", phone_numbers)
+
+        except FileNotFoundError:
+            return f"Something went wrong while reading the file with file path ({self.file_path}). Is the file path correct?"
