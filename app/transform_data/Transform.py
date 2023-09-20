@@ -25,6 +25,9 @@ class Transform:
             )
 
     def unstructured_email_and_number_to_dataframe(self) -> DataFrame:
+        """Reads phone numbers and emails from an unstructured text file
+        and creates a pandas DataFrame with the data.
+        """
         try:
             with open(self.file_path, "r") as file:
                 text = file.read()
@@ -35,8 +38,6 @@ class Transform:
 
                 phone_numbers = re.findall(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", text)
 
-                print(phone_numbers)
-                print(emails)
             data = list(zip(emails, phone_numbers))
             df = pd.DataFrame(data, columns=["Email", "Phone_Number"])
 
