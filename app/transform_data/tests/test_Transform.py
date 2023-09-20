@@ -27,10 +27,10 @@ def test_unstructured_email_and_number_to_dataframe() -> None:
     with open("./app/transform_data/tests/test.txt") as f:
         text = f.read()
 
-        emails = re.findall(
+        email = re.findall(
             r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b", text
         )
-        phone_numbers = re.findall(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", text)
+        phone_number = re.findall(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", text)
 
-    assert test_email == emails
-    assert test_phone_number == phone_numbers
+    assert test_email == email
+    assert test_phone_number == phone_number
