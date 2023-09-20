@@ -3,9 +3,11 @@ version: "3.8"
 services:
   app:
     build: ./app/
-    command: sh -c "sleep 10s ; python3 ./script.py"
+    command: sh -c "sleep 10s"
     depends_on:
       - mysql
+    stdin_open: true
+    tty: true
 
   mysql:
     image: mysql:8.1
