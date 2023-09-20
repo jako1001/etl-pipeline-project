@@ -27,12 +27,12 @@ Using this script is simple.
 
 What's this doing?
 
-`docker compose run app ./wait-for-it.sh mysql:3306`: This portion runs the and executes the wait-for-it
+`docker-compose run app ./wait-for-it.sh mysql:3306`: This portion runs the and executes the wait-for-it
 shell command to wait for the database to be initialized on port 3306.
 (Big thanks to GitHub user vishnubob. You can find the command here: [wait-for-it](https://github.com/vishnubob/wait-for-it))
 
 `-- python3 script.py`: After the database is ready, run the python script file
 
-`your_file_name`: Change this to the name of your file in the "external_data" directory. Don't forget to include the file extension.
+`your_file_name`: Change this to the name of your file in the "app/external_data" directory. Don't forget to include the file extension.
 
 `your_table_name`: Change this to the name that you want the table to be called in the database.
