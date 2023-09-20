@@ -36,6 +36,6 @@ shell command to wait for the database to be initialized on port 3306
 
 `-- python3 script.py`: After the database is ready, run the python script file
 
-`${file}`: User inputted file name of the file in the app/external_data directory
+`${file}`: User inputted file name and extenstion of the file in the app/external_data directory
 
 `${table}`: User inputted table name for the table you want to create in the MySQL database
