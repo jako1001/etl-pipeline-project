@@ -1,4 +1,5 @@
 from .db_funcs import connect_to_database
+import mysql.connector
 
 
 class DatabaseHandler:
@@ -19,9 +20,13 @@ class DatabaseHandler:
         columns_with_types = ", ".join(
             [f"{name} VARCHAR(255)" for name in self.column_names]
         )
-        query = f"CREATE TABLE IF NOT EXISTS {table_name} (id INT AUTO_INCREMENT PRIMARY KEY, {columns_with_types})"
+        try:
+            query = f"CREATE TABLE IF NOT EXISTS {table_name} (id INT AUTO_INCREMENT PRIMARY KEY, {columns_with_types})"
 
-        self.cursor.execute(query)
+            self.cursor.execute(query)
+
+        except mysql.connector.errors.ProgrammingError:
+            raise mysql.connector.errors.ProgrammingError("Error while creating a table. Did you make sure the CSV file you are using has headers without spaces? (ex: first_name)")
 
     def insert(self, df, table):
         """Insert data from a DataFrame into a table
