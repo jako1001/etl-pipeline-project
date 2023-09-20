@@ -21,7 +21,7 @@ DataFrame and inserted into a MySQL database automatically.
 Using this script is simple.
 
 1. Clone the repository
-2. Place the file you want to read in the "external_data" directory. Two test files are included there already.
+2. Place the file you want to read in the "app/external_data" directory. Two test files are included there already.
 3. Run `docker-compose build` while in the main directory
 4. Once it is finished building, run `docker compose run app ./wait-for-it.sh mysql:3306 -- python3 script.py your_file_name your_table_name`
 
