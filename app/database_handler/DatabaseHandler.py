@@ -26,7 +26,9 @@ class DatabaseHandler:
             self.cursor.execute(query)
 
         except mysql.connector.errors.ProgrammingError:
-            raise mysql.connector.errors.ProgrammingError("Error while creating a table. Did you make sure the CSV file you are using has headers without spaces? (ex: first_name)")
+            raise mysql.connector.errors.ProgrammingError(
+                "Error while creating a table. Did you make sure the CSV file you are using has headers without spaces? (ex: first_name)"
+            )
 
     def insert(self, df, table):
         """Insert data from a DataFrame into a table
@@ -37,14 +39,20 @@ class DatabaseHandler:
         table -- Name of the table in the database
         you want to add data to
         """
-        for _, row in df.iterrows():
-            columns = ", ".join(self.column_names)
-            placeholders = ", ".join(["%s"] * len(self.column_names))
-            query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
+        try:
+            for _, row in df.iterrows():
+                columns = ", ".join(self.column_names)
+                placeholders = ", ".join(["%s"] * len(self.column_names))
+                query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
 
-            self.cursor.execute(query, tuple(row))
+                self.cursor.execute(query, tuple(row))
 
-        self.conn.commit()
+            self.conn.commit()
+        except Exception as e:
+            print(f"An error occured: {e}")
+            self.conn.rollback()
+            self.conn.close()
+            return "exit"
 
     def view_table(self, table) -> None:
         """Print the column names and data from a
@@ -55,10 +63,13 @@ class DatabaseHandler:
         table -- Name of the table in the database
         you want to view
         """
-        select = f"SELECT * FROM {table}"
-        self.cursor.execute(select)
-        rows = self.cursor.fetchall()
-        column_names = [column[0] for column in self.cursor.description]
+        try:
+            select = f"SELECT * FROM {table}"
+            self.cursor.execute(select)
+            rows = self.cursor.fetchall()
+            column_names = [column[0] for column in self.cursor.description]
 
-        print(", ".join(column_names))
-        [print(row) for row in rows]
+            print(", ".join(column_names))
+            [print(row) for row in rows]
+        except Exception as e:
+            print(f"An error occured: {e}")

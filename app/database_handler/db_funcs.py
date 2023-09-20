@@ -2,6 +2,7 @@ import mysql.connector
 
 
 def connect_to_database(user, password, host, port, database):
+    """Connects to active database"""
     try:
         conn = mysql.connector.connect(
             user=user, password=password, host=host, port=port, database=database

@@ -25,6 +25,9 @@ class Transform:
             )
 
     def unstructured_email_and_number_to_dataframe(self) -> DataFrame:
+        """Reads phone numbers and emails from an unstructured text file
+        and creates a pandas DataFrame with the data.
+        """
         try:
             with open(self.file_path, "r") as file:
                 text = file.read()

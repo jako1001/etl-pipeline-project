@@ -21,12 +21,14 @@ def script(file_name, table_name) -> None:
     db.create_table(table_name, df)
 
     print("Inserting data into table...")
-    db.insert(df, table_name)
+    insert = db.insert(df, table_name)
+    if insert == "exit": return
 
     print("Done! Here is the data in your database!: ")
     db.view_table(table_name)
 
     db.conn.close()
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -35,4 +37,4 @@ if __name__ == "__main__":
 
     file_name = sys.argv[1]
     table_name = sys.argv[2]
-    script(file_name , table_name)
+    script(file_name, table_name)

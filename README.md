@@ -24,6 +24,7 @@ Using this script is simple.
 2. Place the file you want to read in the "app/external_data" directory. Two test files are included there already
 3. While in the top level directory run the command `make run file=your_file_name table=your_table_name`. Don't forget
    the file extenstion for the file name
+4. Run `docker-compose down` whenever you are done running the script
 
 ### What's this doing?
 
@@ -39,3 +40,8 @@ shell command to wait for the database to be initialized on port 3306
 `${file}`: User inputted file name and extenstion of the file in the app/external_data directory
 
 `${table}`: User inputted table name for the table you want to create in the MySQL database
+
+### For tests
+
+1. Run `docker-compose up -d`
+2. Run `pytest`
