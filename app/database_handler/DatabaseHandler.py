@@ -51,6 +51,8 @@ class DatabaseHandler:
         except Exception as e:
             print(f"An error occured: {e}")
             self.conn.rollback()
+            self.conn.close()
+            return "exit"
 
     def view_table(self, table) -> None:
         """Print the column names and data from a

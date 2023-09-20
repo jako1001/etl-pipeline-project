@@ -21,7 +21,8 @@ def script(file_name, table_name) -> None:
     db.create_table(table_name, df)
 
     print("Inserting data into table...")
-    db.insert(df, table_name)
+    insert = db.insert(df, table_name)
+    if insert == "exit": return
 
     print("Done! Here is the data in your database!: ")
     db.view_table(table_name)
