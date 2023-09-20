@@ -35,6 +35,8 @@ class Transform:
 
                 phone_numbers = re.findall(r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", text)
 
+                print(phone_numbers)
+                print(emails)
             data = list(zip(emails, phone_numbers))
             df = pd.DataFrame(data, columns=["Email", "Phone_Number"])
 

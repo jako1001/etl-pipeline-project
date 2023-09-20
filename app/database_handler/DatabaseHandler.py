@@ -26,7 +26,9 @@ class DatabaseHandler:
             self.cursor.execute(query)
 
         except mysql.connector.errors.ProgrammingError:
-            raise mysql.connector.errors.ProgrammingError("Error while creating a table. Did you make sure the CSV file you are using has headers without spaces? (ex: first_name)")
+            raise mysql.connector.errors.ProgrammingError(
+                "Error while creating a table. Did you make sure the CSV file you are using has headers without spaces? (ex: first_name)"
+            )
 
     def insert(self, df, table):
         """Insert data from a DataFrame into a table
