@@ -28,6 +28,7 @@ def script(file_name, table_name) -> None:
 
     db.conn.close()
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: python3 script.py <file_name> <table_name>")
@@ -35,4 +36,4 @@ if __name__ == "__main__":
 
     file_name = sys.argv[1]
     table_name = sys.argv[2]
-    script(file_name , table_name)
+    script(file_name, table_name)
