@@ -33,7 +33,7 @@ Inside the makefile you can see the command `docker-compose run app ./wait-for-i
 `docker-compose run app ./wait-for-it.sh mysql:3306`: This portion runs docker and the wait-for-it
 shell command to wait for the database to be initialized on port 3306
 
-(Big thanks to GitHub user vishnubob. You can find the file here: [wait-for-it](https://github.com/vishnubob/wait-for-it))
+(Big thanks to GitHub user vishnubob for the database awaiting script. You can find the file here: [wait-for-it](https://github.com/vishnubob/wait-for-it))
 
 `-- python3 script.py`: After the database is ready, run the python script file
 
